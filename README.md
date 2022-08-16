@@ -1,7 +1,5 @@
 # check_NVIDIA_RTX_A6000
 
-In this github I built docker to simulate the same enviroment I ran it on my machine because I want to test if the problem comes from  my  GPU card or somewhere else. I got the same error, that proves there is a problem on my GPU card.
-
 ### To run [mnist.ipynb](https://walkwithfastai.com/MNIST) using docker; run: 
 
 ```bash
