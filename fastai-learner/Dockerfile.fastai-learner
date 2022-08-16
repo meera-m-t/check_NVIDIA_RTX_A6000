@@ -1,0 +1,47 @@
+FROM mambaorg/micromamba:latest as builder
+
+COPY docker-environment.yml .
+
+RUN micromamba create --file docker-environment.yml
+
+
+FROM nvidia/cuda:11.7.1-cudnn8-runtime-ubuntu20.04
+
+EXPOSE 8888
+
+LABEL maintainer2.name="Sameerah Talafha"\
+      maintainer2.email="sameerah@vectech.io"
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update \
+    && apt-get install curl make g++ git -y \
+    && useradd -ms /bin/bash meera
+
+COPY --from=builder /opt/conda /opt/conda
+
+COPY --from=builder /bin/micromamba /usr/bin/micromamba
+
+COPY --from=builder /usr/local/bin/_activate_current_env.sh /usr/local/bin/_activate_current_env.sh
+
+ENV MAMBA_EXE=/usr/bin/micromamba
+ENV CONDA_PREFIX=/opt/conda/envs/fastai-learner
+ENV MAMBA_ROOT_PREFIX=/opt/conda/
+
+ADD . /home/meera/app
+
+RUN chown -R meera:meera /home/meera/app
+
+WORKDIR /home/meera/app
+
+USER meera
+
+RUN echo source /usr/local/bin/_activate_current_env.sh >> ~/.bashrc \
+    && eval "$(micromamba shell hook shell=bash)" \
+    && micromamba activate fastai-learner \
+    && chmod +x docker-entrypoint.sh
+
+EXPOSE 8888
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+

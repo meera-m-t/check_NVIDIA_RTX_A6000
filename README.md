@@ -1,0 +1,1 @@
+# check_NVIDIA_RTX_A6000
