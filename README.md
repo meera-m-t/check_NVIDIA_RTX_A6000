@@ -1,6 +1,6 @@
 # check_NVIDIA_RTX_A6000
 
-In this github I tried  to  dockerize Cuda: Because Cuda, OS, and everything in docker are packed with the PyTorch version we want. So just, I use the driver from my local system and some wrappers. So this will tell me exactly if the problem is with my card or somewhere else. I got the same eeror. That proofs there is a problem on my card.
+In this github I built docker to build the same enviroment I runt it on my machine because I want to test if the problem is with my  GPU card or somewhere else. I got the same error. That proofs there is a problem on my GPU card.
 
 ## To run ``mnist.ipynb`` using docker; run: 
 
