@@ -2,7 +2,7 @@
 
 In this github I built docker to build the same enviroment I ran it on my machine because I want to test if the problem comes from  my  GPU card or somewhere else. I got the same error, that proofs there is a problem on my GPU card.
 
-## To run ``mnist.ipynb`` using docker; run: 
+### To run ``mnist.ipynb`` using docker; run: 
 
 ```bash
 docker build -t fastai-learner:old -f Dockerfile.fastai-learner-old .
