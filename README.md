@@ -2,7 +2,7 @@
 
 The main goal is to test the GPU card (in this hardware setup) compatibility with PyTorch,  with the exclusion of any possibility there is any problem with OS, Cuda,  etc, ... (software issue). Eventually,  I got the same error from prior attempts installing these packages on the machine without a Docker Image, proving there is a problem with compatibility between the GPU card in this hardware setup and PyTorch.
 
-### contents
+### Contents
 - ``Dockerfile.fastai-learner``: setting the mamba enviroment based on cuda11.7, 
 - ``Dockerfile.fastai-learner-old``: setting the mamba enviroment based on cuda11.3. 
 
