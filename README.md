@@ -1,10 +1,11 @@
-# check_NVIDIA_RTX_A6000
+## GPU Compatibility Testing with PyTorch
+### bjective
 
-The main goal is to test the GPU card (in this hardware setup) compatibility with PyTorch,  with the exclusion of any possibility there is any problem with OS, Cuda,  etc, ... (software issue). Eventually,  I got the same error from prior attempts installing these packages on the machine without a Docker Image, proving there is a problem with compatibility between the GPU card in this hardware setup and PyTorch.
+This project aims to test GPU compatibility with PyTorch, ensuring that hardware-related issues are isolated from software configurations such as the OS, CUDA, or drivers. Previous attempts to install the required packages directly on the host system resulted in similar errors, confirming that the issue lies in multi-GPU parallel execution—where a single GPU functions correctly, but multiple GPUs do not work as expected.
 
 ### Contents
 - ``Dockerfile.fastai-learner``: setting the mamba enviroment based on cuda11.7, 
-- ``Dockerfile.fastai-learner-old``: setting the mamba enviroment based on cuda11.3. 
+- mnist.ipynb: A test script using FastAI and PyTorch.
 
 ### Source of code
 The main source of my code from [here](https://hub.docker.com/r/nvidia/cuda/tags)
@@ -12,6 +13,32 @@ The main source of my code from [here](https://hub.docker.com/r/nvidia/cuda/tags
 ### To run [mnist.ipynb](https://walkwithfastai.com/MNIST) using docker; run: 
 
 ```bash
-docker build -t fastai-learner:old -f Dockerfile.fastai-learner-old .
-docker run -it --gpus=all -p 8888:8888 fastai-learner:old
+docker build -t fastai-learner:new -f Dockerfile.fastai-learner .
+docker run -it --gpus=all -p 8888:8888 fastai-learner:new
+```
+
+###  Pre-Configuration Steps
+- Update Docker daemon settings (/etc/docker/daemon.json):
+```bash
+{
+  "runtimes": {
+    "nvidia": {
+      "path": "nvidia-container-runtime",
+      "runtimeArgs": []
+    }
+  },
+  "default-runtime": "nvidia",
+  "dns": ["8.8.8.8", "8.8.4.4"]
+}
+
+
+```
+
+
+
+```bash
+sudo systemctl restart docker
+
+docker info | grep -A 10 "Server"
+
 ```
